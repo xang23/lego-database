@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>LEGODATABASEN - sök här!</title>
+		<link href="style.css" media="screen" rel="stylesheet" type="text/css"/>
+	</head>
+	
+	<body>
+	
+		<div id="header">
+			<div id="toprow">
+				<div id="groupName">
+				<h2>Grupp 1</h2>
+				</div>
+				
+				<div id="helpButton">
+				<h2>?</h2>
+				</div>
+			</div>
+			
+			<div id="title">
+			<h1> TITEL </h1>
+			</div>	
+		
+		<!-- Kom ihåg att avsluta header-div för varje enskild sida -->

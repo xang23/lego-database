@@ -1,0 +1,14 @@
+#header{
+	background-color: #38a2dd;
+}
+body{
+	margin: 0;
+}
+
+#groupName{
+	float: left;
+}
+
+h1{
+	text-align: center;
+}
