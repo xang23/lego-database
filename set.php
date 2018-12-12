@@ -24,9 +24,10 @@
 						AND inventory.ItemID = images.ItemID AND images.ItemtypeID = inventory.ItemtypeID"); */
 						
 						$contents = mysqli_query($connection,
-						"SELECT sets.Setname, sets.SetID, sets.Year, categories.Categoryname 
-						FROM sets, categories 
-						WHERE sets.SetID = '375-2' AND sets.CatID = categories.CatID
+						"SELECT sets.Setname, sets.SetID, sets.Year, categories.Categoryname, images.has_gif,
+						images.has_jpg, images.has_largegif, images.has_largejpg
+						FROM sets, categories, images 
+						WHERE sets.SetID = '375-2' AND sets.CatID = categories.CatID AND images.ItemID = sets.SetID
 						LIMIT 30");
 						
 
@@ -34,9 +35,27 @@
 						//Skriver ut satsnamn, sats ID, år och katergori
 						while($row = mysqli_fetch_array($contents)){
 							
-						
-							$Setname = $row['Setname'];
+							//För bild
 							$SetID = $row['SetID'];
+							$itemtype = 'S';
+							$filetype;
+							
+							if($row['has_gif'] OR $row['has_largegif']){
+								$filetype = ".gif";
+							}
+							
+							else{
+								$filetype = ".jpg";
+							};
+							
+							if($row['has_largegif'] OR $row['has_largejpg']){
+								$itemtype = 'SL';
+							};
+							$fileName = $itemtype."/".$SetID.$filetype;
+							$imgsrc = $urlBase.$fileName;
+							print("<img src= $imgsrc alt=$fileName>");
+	
+							$Setname = $row['Setname'];
 							$SetYear = $row['Year'];
 							$SetCat = $row['Categoryname'];
 							
