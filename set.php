@@ -114,13 +114,32 @@
 							);
 							
 							//Display alla bitar och figurer i satsen som vi söker på - IN PROGRESS
-							/*print("<table>");
+							print("<table>");
 							
-							while($setRow = mysqli_fetch_array($partsInSet){
-								print("<tr><td>$setRow['ItemID']</td></tr>");
+							//lägg till counter för samlarens bitar (som räknas i while loopen) (fullCounter)
+							
+							while($setRow = mysqli_fetch_array($partsInSet)){
+								//while loop för varje bit i det sökta setet
+								$ItemID = $setRow['ItemID'];
+								print("<tr><td>$ItemID</td></tr>");
+								
+								//sökning på collections mm, se bild på Trello
+								//ev skriva ut en tabell över seten biten finns i + quantity (ta med setID i sök!!)
+								//kommer ge antal av biten för varje setID, en rad för varje SetID
+								
+								//while loop för varje rad i sökningen
+									//lägga på quantity till en counter
+									//testa om counter >= quant_goal(el counterGoal)
+										//om den når det: return countGoal
+								//när raderna är slut och om counter < quant_goal: return counter
+								
+								//counter eller countGoal ska läggas till i den totala countern (fullCounter)
+							
 							}
 							
-							print("</table>");*/
+							//Skriv ut fullCounter i "Varav i samling:"
+							
+							print("</table>");
 						}
 						
 						
