@@ -12,7 +12,7 @@
 							die ('MySQL connection error.');
 						}
 						//$searchID = $_GET['searchID'];//
-						$searchID = "'383-2'";
+						$searchID = "'3341-1'";
 						
 						$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
 
@@ -71,15 +71,15 @@
 						$setQuantity = mysqli_query($connection,
 						"SELECT inventory.Quantity
 						FROM inventory
-						WHERE inventory.SetID=$searchID
+						WHERE inventory.SetID=$searchID AND (inventory.ItemtypeID = 'P' OR inventory.ItemtypeID = 'M')
 						LIMIT 30");
 						
-						$quantity = 0;
+						$totSetQuantity = 0;
 						while($quantRow = mysqli_fetch_array($setQuantity)) {
-							$quantity += $quantRow['Quantity'];
+							$totSetQuantity += $quantRow['Quantity'];
 						}
 						
-						print("<p>Quantity: $quantity</p>\n");
+						print("<p>Quantity: $totSetQuantity</p>\n");
 						
 						$collectionQuant = mysqli_query($connection,
 						"SELECT collection.Quantity
@@ -107,39 +107,76 @@
 							//någon annan sats i samlingen
 							
 							$partsInSet = mysqli_query($connection,
-							"SELECT inventory.ItemID
+							"SELECT inventory.ItemID, inventory.Quantity, inventory.ColorID
 							FROM inventory
-							WHERE inventory.SetID=$searchID
+							WHERE inventory.SetID=$searchID AND (inventory.ItemtypeID = 'P' OR inventory.ItemtypeID = 'M') 
 							LIMIT 30"
 							);
 							
 							//Display alla bitar och figurer i satsen som vi söker på - IN PROGRESS
-							print("<table>");
+							//print("<table>");
 							
-							//lägg till counter för samlarens bitar (som räknas i while loopen) (fullCounter)
+							//lägg till counter för samlarens bitar (som räknas i while loopen) (totPartsCounter)
+							$totPartsCounter = 0;
 							
 							while($setRow = mysqli_fetch_array($partsInSet)){
 								//while loop för varje bit i det sökta setet
-								$ItemID = $setRow['ItemID'];
-								print("<tr><td>$ItemID</td></tr>");
+								$itemID = $setRow['ItemID'];
+								$colorID = $setRow['ColorID'];
+								$quantGoal = $setRow['Quantity'];
+								
+								print("<p>$itemID</p>");
+								print("<p>$colorID</p>");
+								print("<p>$quantGoal</p>");
 								
 								//sökning på collections mm, se bild på Trello
-								//ev skriva ut en tabell över seten biten finns i + quantity (ta med setID i sök!!)
 								//kommer ge antal av biten för varje setID, en rad för varje SetID
+								$bitQuantity = mysqli_query($connection,
+								"SELECT inventory.Quantity, collection.SetID
+								FROM inventory, collection
+								WHERE inventory.ItemID = '$itemID' AND inventory.ColorID = '$colorID'
+								AND collection.SetID = inventory.SetID
+								LIMIT 5
+								"
+								);
+								
+								//varaibel counter
+								$bitCounter = 0;
 								
 								//while loop för varje rad i sökningen
+								while ($bitRow = mysqli_fetch_array($bitQuantity)){
+									$quantity = $bitRow['Quantity'];
+									$setID = $bitRow['SetID'];
+									
+									//skriva ut tabell över bitID, setet den finns i och antal som finns i setet
+									print("<p>ItemID: $itemID</p>");
+									print("<p>SetID: $setID</p>");
+									print("<p>Quantity: $quantity</p>"); //ev skriva ut totalt antal i collection, senare
+									print("<p>ColorID: $colorID</p>");
+									
 									//lägga på quantity till en counter
+									$bitCounter += $quantity;
+									
 									//testa om counter >= quant_goal(el counterGoal)
-										//om den når det: return countGoal
-								//när raderna är slut och om counter < quant_goal: return counter
+									//om den når det: lägg countGoal i totPartsCounter
+									if ($bitCounter >= $quantGoal) {
+										$totPartsCounter += $quantGoal;
+										
+										break;
+									}
+								}
 								
+								//när raderna är slut och om counter < quant_goal: return counter
 								//counter eller countGoal ska läggas till i den totala countern (fullCounter)
-							
+								if ($bitCounter < $quantGoal) {
+									$totPartsCounter += $bitCounter;
+								}
 							}
 							
 							//Skriv ut fullCounter i "Varav i samling:"
+							print("<p>Varav i samling: $totPartsCounter</p>");
 							
-							print("</table>");
+							//print("</table>");
 						}
 						
 						
