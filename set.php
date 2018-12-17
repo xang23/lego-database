@@ -79,7 +79,7 @@
 							$totSetQuantity += $quantRow['Quantity'];
 						}
 						
-						print("<p>Quantity: $totSetQuantity</p>\n");
+						print("<p>Antal bitar: $totSetQuantity</p>\n");
 						
 						$collectionQuant = mysqli_query($connection,
 						"SELECT collection.Quantity
@@ -97,8 +97,6 @@
 							print("<p>Antal av denna sats: $colQuant </p>");
 						}
 						else {
-							print("<p>Satsen finns inte i din samling :(</p>");
-							
 							//Om ej i samling: kolla hur många av satsens bitar som finns i samling
 							
 							//Hur många av bitarna i söksatsen finns i andra satser i samlingen?
@@ -125,10 +123,6 @@
 								$colorID = $setRow['ColorID'];
 								$quantGoal = $setRow['Quantity'];
 								
-								print("<p>$itemID</p>");
-								print("<p>$colorID</p>");
-								print("<p>$quantGoal</p>");
-								
 								//sökning på collections mm, se bild på Trello
 								//kommer ge antal av biten för varje setID, en rad för varje SetID
 								$bitQuantity = mysqli_query($connection,
@@ -147,12 +141,6 @@
 								while ($bitRow = mysqli_fetch_array($bitQuantity)){
 									$quantity = $bitRow['Quantity'];
 									$setID = $bitRow['SetID'];
-									
-									//skriva ut tabell över bitID, setet den finns i och antal som finns i setet
-									print("<p>ItemID: $itemID</p>");
-									print("<p>SetID: $setID</p>");
-									print("<p>Quantity: $quantity</p>"); //ev skriva ut totalt antal i collection, senare
-									print("<p>ColorID: $colorID</p>");
 									
 									//lägga på quantity till en counter
 									$bitCounter += $quantity;
@@ -174,31 +162,69 @@
 							}
 							
 							//Skriv ut fullCounter i "Varav i samling:"
-							print("<p>Varav i samling: $totPartsCounter</p>");
+							print("<p>Varav i samling (från andra satser): $totPartsCounter</p>");
+							
 							
 							//print("</table>");
 						}
 						
+						//Note: i tabellen: skriv ut totalt antal bitar i samlingen (även om inte alla behövs till att bygga ett set)
 						
 						
 						
-						?>
 						
 						
-				</div>
+				print("</div>");
 				
-				<div id="availabilityInfo">
-				</div>
-			 </div>
-			 <!-- php här? -->
-			 <div id="setTable">
-				<div id="minifigs">
-				</div>
+				print("<div id='availabilityInfo'>");
+				print("</div>");
+			 print("</div>");
+			 
+			 print("<div id='setTable'>");
+				print("<div id='minifigs'>");
 				
-				<div id="parts">
-				</div>
-			 </div>
-		
+				$minifigsSearch= mysqli_query($connection,
+				"SELECT minifigs.Minifigname, inventory.ItemID, inventory.Quantity
+				FROM inventory, minifigs
+				WHERE inventory.SetID = $searchID AND inventory.ItemID = minifigs.MinifigID AND
+				inventory.ItemtypeID = 'M'
+				LIMIT 30");
+				
+				print("<table>\n<tr>");
+				print ("<th> Bild </th>");
+				print ("<th> Namn </th>");
+				print ("<th> Figur ID </th>");
+				print ("<th> Antal i sats </th>");
+				print ("<th> Antal i samling </th>");
+				print ("</tr>\n");
+				
+				while($minifigRow = mysqli_fetch_array($minifigsSearch)) {
+					$itemID = $minifigRow['ItemID'];
+					$figName = $minifigRow['Minifigname'];
+					$inventQuant = $minifigRow['Quantity'];
+					$colQuant = 0;
+					//BÖRJA HÄÄÄÄÄÄÄÄÄÄÄÄÄR TJOHO!!!!
+					//Hämta hela bild-url
+					//Räkna ut colQuant
+					
+					print("<td><img src=$imgSource alt=$figName></td>");
+					print ("<td>$figName</td>");
+					print("<td>$itemID</td>");
+					print("<td>$inventQuant</td>");
+					print("<td>$colQuant</td>");
+
+					
+				print ("</tr>\n");
+					
+				}
+				
+				print("</div>");
+				
+				print("<div id='parts'>");
+				print("</div>");
+			 print("</div>");
+			?>
+			
 		</div>
 	</body>
 </html>
