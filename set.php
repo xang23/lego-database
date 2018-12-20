@@ -1,4 +1,4 @@
-<?php include "header.txt";?>
+<?php include "txt/header.txt";?>
 
 		</div>
 		<div class="main">
@@ -12,7 +12,9 @@
 							die ('MySQL connection error.');
 						}
 						//$searchID = $_GET['searchID'];//
-						$searchID = "'3342-1'";
+						$searchID = "'".$_GET["searchID"]."'";
+						print "$searchID";
+						//$searchID = "'3342-1'";
 						
 						$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
 						$contents = mysqli_query($connection,
@@ -175,15 +177,15 @@
 				print("
 						<table>
 						<tr>
-						<td><img class='availInfo' src='green.svg' alt='gröm cirkel'></td>
+						<td><img src='./green.svg' class='availInfo'  alt='gröm cirkel'></td>
 						<td><p>Komplett</p></td>
 						</tr>
 						<tr>
-						<td><img class='availInfo' src='yellow.svg' alt='gul cirkel'></td>
+						<td><img class='availInfo' src='./yellow.svg' alt='gul cirkel'></td>
 						<td><p>Ersättningsbitar finns</p></td>
 						</tr>
 						<tr>
-						<td><img class='availInfo' src='red.svg' alt='röd cirkel'></td>
+						<td><img class='availInfo' src='./red.svg' alt='röd cirkel'></td>
 						<td><p>Ej komplett</p></td>
 						</tr>
 						</table> ");
