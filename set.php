@@ -15,7 +15,6 @@
 						$searchID = "'3342-1'";
 						
 						$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
-
 						$contents = mysqli_query($connection,
 						"SELECT sets.Setname, sets.SetID, sets.Year, categories.Categoryname, images.has_gif,
 						images.has_jpg, images.has_largegif, images.has_largejpg
@@ -24,7 +23,6 @@
 						LIMIT 30");
 						
 			
-
 						
 						//Skriver ut satsnamn, sats ID, år och katergori
 						while($row = mysqli_fetch_array($contents)){
@@ -174,9 +172,22 @@
 				print("</div>");
 				
 				print("<div id='availabilityInfo'>");
-					print("<img class='availInfo' src='red.svg' alt='röd cirkel'><p>Alla bitar finns inte</p>\n");
-					print("<img class='availInfo' src='yellow.svg' alt='gul cirkel'><p>Saknas i rätt färg</p>\n");
-					print("<img class='availInfo' src='green.svg' alt='gröm cirkel'><p>Alla bitar finns, i rätt färg</p>\n");
+				print("
+						<table>
+						<tr>
+						<td><img class='availInfo' src='green.svg' alt='gröm cirkel'></td>
+						<td><p>Komplett</p></td>
+						</tr>
+						<tr>
+						<td><img class='availInfo' src='yellow.svg' alt='gul cirkel'></td>
+						<td><p>Ersättningsbitar finns</p></td>
+						</tr>
+						<tr>
+						<td><img class='availInfo' src='red.svg' alt='röd cirkel'></td>
+						<td><p>Ej komplett</p></td>
+						</tr>
+						</table> ");
+					
 				print("</div>");
 			 print("</div>");
 			 
@@ -200,7 +211,7 @@
 				LIMIT 30");
 				
 				print("<table>\n<tr>");
-				print ("<th> Tillgänglig </th>");
+				print ("<th>  </th>");
 				print ("<th> Bild </th>");
 				print ("<th> Namn </th>");
 				print ("<th> Figur ID </th>");
@@ -262,7 +273,7 @@
 							$availabilityText = 'Tillgänglig';
 							
 							$availableFigGreen[] = 
-							"<td><img src=$imgsrcAvail alt=$availabilityText></td>
+							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$figName></td>
 							<td>$figName</td>
 							<td>$itemID</td>
@@ -276,7 +287,7 @@
 						$availabilityText = 'Ej tillgänglig';
 						
 						$availableFigRed[] = 
-						"<td><img src=$imgsrcAvail alt=$availabilityText></td>
+						"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 						<td><img src=$imgsrc alt=$figName></td>
 						<td>$figName</td>
 						<td>$itemID</td>
@@ -284,15 +295,6 @@
 						<td>$bitCounter</td>
 						</tr>\n";
 					};
-					
-					/*print("<td><img src=$imgsrcAvail alt=$availabilityText></td>");
-					print("<td><img src=$imgsrc alt=$figName></td>");
-					print ("<td>$figName</td>");
-					print("<td>$itemID</td>");
-					print("<td>$inventQuant</td>");
-					print("<td>$bitCounter</td>");
-
-					print ("</tr>\n");*/
 				
 				}
 		
@@ -302,6 +304,8 @@
 				for ( $i = 0; $i < count($availableFigGreen); $i++) {
 					print $availableFigGreen[$i];
 				}
+				
+				print("</table>");
 				
 				print("</div>");
 				
@@ -322,7 +326,7 @@
 					LIMIT 30");
 					
 					print("<table>\n<tr>");
-					print ("<th> Tillgänglig </th>");
+					print ("<th>  </th>");
 					print ("<th> Bild </th>");
 					print ("<th> Namn </th>");
 					print ("<th> FigurID </th>");
@@ -381,7 +385,7 @@
 						
 						//Räkna ut colQuant (bitCounter)
 						$bitCounter = 0;
-						$otherColorCounter = 0;
+						$mixedColorCounter = 0;
 						
 						//while loop för varje rad i sökningen
 						while ($bitRow = mysqli_fetch_array($bitQuantity)){
@@ -393,15 +397,12 @@
 							//lägga på quantity till en counter
 							if ($tempColorID == $colorID) {
 								$bitCounter += $quantity;
-							}
-							else {
-								$otherColorCounter += $quantity;
-							}
+							};
+							
+							//mixedColorCounter är antalet av en bit, oavsett färg
+							$mixedColorCounter += $quantity;
+							
 						}
-						
-						/**************************
-						------> BÖRJA HÄR!! <------
-						***************************/
 						
 						//AVAILABILITY-FÄRG
 						//OBS: Lägg till counter för fel färg i while-loopen
@@ -415,28 +416,28 @@
 							$availabilityText = 'Tillgänglig';
 							
 							$availableGreen[] = 
-							"<td><img src=$imgsrcAvail alt=$availabilityText></td>
+							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$partName></td>
 							<td>$partName</td>
 							<td>$itemID</td>
 							<td>$colorName</td>
 							<td>$inventQuant</td>
-							<td>$bitCounter</td>
+							<td>$bitCounter ($mixedColorCounter)</td>
 							</tr>\n";
 							
 						}
-						else if($otherColorCounter >= $inventQuant){
+						else if($mixedColorCounter >= $inventQuant){
 							$imgsrcAvail = '"yellow.svg"';
 							$availabilityText = 'Tillgänglig i annan färg';
 							
 							$availableYellow[] = 
-							"<td><img src=$imgsrcAvail alt=$availabilityText></td>
+							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$partName></td>
 							<td>$partName</td>
 							<td>$itemID</td>
 							<td>$colorName</td>
 							<td>$inventQuant</td>
-							<td>$bitCounter</td>
+							<td>$bitCounter ($mixedColorCounter)</td>
 							</tr>\n";
 						}
 						else{
@@ -444,26 +445,15 @@
 							$availabilityText = 'Ej tillgänglig';
 							
 							$availableRed[] = 
-							"<td><img src=$imgsrcAvail alt=$availabilityText></td>
+							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$partName></td>
 							<td>$partName</td>
 							<td>$itemID</td>
 							<td>$colorName</td>
 							<td>$inventQuant</td>
-							<td>$bitCounter</td>
+							<td>$bitCounter ($mixedColorCounter)</td>
 							</tr>\n";
 						};
-						
-						/*print("<td><img src=$imgsrcAvail alt=$availabilityText></td>");
-						print("<td><img src=$imgsrc alt=$partName></td>");
-						print ("<td>$partName</td>");
-						print("<td>$itemID</td>");
-						print("<td>$colorName</td>");
-						print("<td>$inventQuant</td>");
-						print("<td>$bitCounter</td>");*/
-
-						
-						//print ("</tr>\n");
 					
 					}
 					
@@ -480,8 +470,7 @@
 						print $availableGreen[$i];
 					}
 					
-					//print_r ($availableRed);
-					//print_r ($availableGreen);
+					print("</table>");
 						
 				
 				print("</div>");
