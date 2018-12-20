@@ -1,0 +1,17 @@
+<div id = "helpWindow">
+	<div id="helpheader">
+	<h1> HJÄLP </h1>
+	</div>
+	
+	<div id="body">
+	<h2 class = "helpH2"> Sökfunktionen </h2>
+	<p> LOREM IPSUUUUUM MADDAFAKKAS!!!!</p>
+	
+	<h2 class ="helpH2"> Filter </h2>
+	<p> LROEM IMSPUUUUUUM MADADFKAKAS!!!! </p>
+	
+	
+	
+	</div>
+	
+</div>
