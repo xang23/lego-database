@@ -64,13 +64,16 @@
 
 				//Skriv ut alla poster
 				$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
-
+				
+				$setCounter = 0;
+		
 				while($row = mysqli_fetch_array($result)) {
 					
 					//För bild
 					$SetID = $row['SetID'];
 					$itemtype = 'S';
 					$filetype;
+					$setYear = $row['Year'];
 					
 					
 					
@@ -115,16 +118,20 @@
 					
 					
 					print("
-					<div class = 'searchResult'>
-					<img src= $imgsrc alt=$fileName> \n
-					<p><a href='set.php?searchID=$SetID'>$setname</p>
-					
-					
+					<div class='box'>
+					<img class = setImg src= $imgsrc alt=$fileName> \n
+					<p><a href='set.php?searchID=$SetID'>$setname</a></p>
+					<p>$setYear</p>
 					</div>
 					");
 					
+					$setCounter += 1;
+					if($setCounter%3 == 0){
 					}
 					
+				}
+				
+
 
 				mysqli_close($link);
 									
