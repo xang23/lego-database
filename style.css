@@ -19,5 +19,6 @@ h1{
 }
 
 .availInfo {
-	width = 10px;
+	width: 15px;
+	padding: 0 1vw;
 }
