@@ -8,6 +8,7 @@
 		
 	if(isset($_GET["search"]))
 	{
+		echo "din sökning:".$_GET['search'];
 		
 		//$test = "sets.SetID LIKE '%".$_GET["search"]."%'";//Vi vill söka på setID, men i start vill vi inte ha alla.
 		//$test_name="sets.Setname LIKE '%".$_GET["search"]."%'";
@@ -29,39 +30,6 @@
 				}
 				
 				
-				/*
-				if(isset($_GET["pagenr"]))
-				{
-					$pagenr=$_GET["pagenr"];
-				}
-				else
-				{
-					$pagenr = 1;
-				}
-				
-				$d_offset_pp=2;
-				$offset=($pagenr-1)*$d_offset_pp;
-				
-				$tot_p_sql ="SELECT COUNT(*) FROM TABLE";
-				$res= mysqli_query($conn,$tot_p_sql);
-				$total_rows= mysqli_query($res)[0];
-				$total_pages= ceil($total_rows/$d_offset_pp);
-				
-				$sql =""
-				*/
-				
-				
-				//visa nästa sida av sökning eller tidigare
-		
-				
-				/*
-				else if(isset( $_GET["next"])
-				{
-					$offset += 2;
-				}
-				else {}*/
-				
-				
 			
 			echo "rbutton = ".$_COOKIE['rbutton'];
 			if(!$limit = $_GET["limit"])
@@ -74,14 +42,17 @@
 		
 		
 		$result = mysqli_query($link, //I FROM behöver vi sets?
-		"SELECT sets.SetID, sets.Setname, images.ItemID, images.has_gif, images.has_jpg, images.has_largejpg, images.has_largegif
+		"SELECT sets.SetID, sets.Setname, images.ItemID, images.has_gif, images.has_jpg, images.has_largejpg,
+		images.has_largegif, sets.Year
 		FROM sets, images 
 		$search AND sets.SetID = images.ItemID AND images.ItemtypeID = 'S'
 		ORDER BY $order 
 		LIMIT $limit" //Vi vill ha en offset här < så att man kan visa de andra satserna! Helst med hjälp av att klicka på en knapp elr något.
 		);
 
-
+		print "NEXT:". $_GET["next_page"];
+		print "GET:". $sequered;	
+		print "GET:". $_GET["search"];
 		
 	
 
