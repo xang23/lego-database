@@ -12,3 +12,12 @@ body{
 h1{
 	text-align: center;
 }
+
+#setInfo {
+	border: solid black;
+	
+}
+
+.availInfo {
+	width = 10px;
+}
