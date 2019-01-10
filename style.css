@@ -1,21 +1,115 @@
-#header{
-	background-color: #38a2dd;
+/*General*/
+.headerText{
+	color: #ffffff;
+}
+.headline{
+	color: #ffffff;
+	font-family: 'Indie Flower', cursive;
+}
+html{
+	font-family: 'Roboto', sans-serif;
+}
+h1{
+	text-align: center;
 }
 body{
 	margin: 0;
 }
 
+
+
+/*h1{
+	color: #ffffff;
+}
+h2{
+	color: #ffffff;
+}*/
+
+/*Header*/
+header{
+	background-color: #38a2dd;
+	padding: 10px 10px;
+} /*Ha detta istället för id:t header?*/
+
+#header{
+	background-color: #38a2dd;
+	padding: 10px 10px;
+}
+/*Varför funkar inte diven utan en höjd?*/
+#toprow{
+	height: 40px;
+}
 #groupName{
 	float: left;
 }
+#helpButton{
+	float:right;
+}
+#title{
+	width: 50vw;
+	margin: 0 auto;
+}
 
-h1{
+#description{
+	width: 50vw;
+	margin: 0 auto;
+}
+#descriptionText{
 	text-align: center;
 }
 
+/*Footer*/
+footer{
+	background-color: #38a2dd;
+	height: 30px;
+}
+
+/*Search*/
+input{
+	width: 50vw;
+}
+label{
+	display: block;
+}
+select{
+	width: 15vw;
+	display: block;
+}
+#searchBar{
+	margin: 10vw auto;
+	width: 45vw;
+}
+#searchRow1{
+
+}
+#searchField{
+	width: 34vw;
+	display: inline-block;
+}
+#searchButton{
+	width: 10vw;
+	color: #ffffff;
+	background-color: #cd161e;
+	display: inline-block;
+}
+#catergorySearch{
+	float: left; /*göra en klass för alla sökboxar? så alla kan ha float left*/
+}
+#yearSearch{
+	float: left;
+}
+#sortBy{
+	/*Varför sabbar det att ha float: left här?*/
+}
+
+
+
+
+
+
 #setInfo {
 	border: solid black;
-	
+
 }
 
 .availInfo {
