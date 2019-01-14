@@ -60,6 +60,7 @@
 					
 			</form>
 		</div>
+	</div>
 		
 		<?php include "txt/footer.txt";?>
 		
