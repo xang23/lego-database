@@ -27,7 +27,7 @@
 			</div>
 
 			<div id="title">
-			  <h1 class="headline" class="headerText"> TITEL </h1>
+			  <h1 class="headline"> TITEL </h1>
 			</div>
 
 		<!-- Kom ihåg att avsluta header-div för varje enskild sida -->
