@@ -9,7 +9,7 @@
 				<p>Search <input type="text" name="search"/></p>
 				<!-- Söktext in i denna -->
 				</div>
-				<div id="serachButton">
+				<div id="searchButton">
 				<p><input type="submit" /> </p>
 				</div>
 				
@@ -26,20 +26,12 @@
 			</div>
 			<!-- php start-->
 			<?php
-			print("<p>Visar ANTAL resultat för sökordet ".$_GET['search']."...</p>");
-			?>
-			<div id="searchResult">
-				<!--
-				<table>
-				
-					<tr>
-						<th>SetID</th>
-						<th>Item-ID</th>
-						<th>Setname</th>
-						<th>Image</th>
-					</tr>
-					-->
-	<?php
+			$setCounter = 0;
+			
+			print("<p>Visarresultat för sökordet ".$_GET['search']."...</p>");
+			
+			print('<div id="searchResult">');
+
 
 			$link = mysqli_connect("mysql.itn.liu.se" ,"lego","", "lego");
 				
@@ -65,7 +57,7 @@
 				//Skriv ut alla poster
 				$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
 				
-				$setCounter = 0;
+				
 				
 				print("<ul class='resultsList'>");
 		
@@ -121,17 +113,26 @@
 					print("<li>");
 					
 					print("
-					<div class='box'>
-					<img class = 'setImg' src= $imgsrc alt=$fileName> \n
-					<p><a href='set.php?searchID=$SetID'>$setname</a></p>
-					<p>$setYear</p>
-					</div>
+					<a href='set.php?searchID=$SetID'>
+						<div class='box'>
+							<div class='imgDiv'>
+							<img class = 'setImg' src= $imgsrc alt=$fileName>
+							</div> \n
+							<div class='searchResultInfo'>
+							<p><a href='set.php?searchID=$SetID'>$setname</a></p>
+							<p class= 'year'>$setYear</p>
+							</div> \n
+						</div>
+					</a>
 					");
 					
 					print("</li>");
 					
 					$setCounter += 1;
-					if($setCounter%3 == 0){
+					if( $setCounter == 12){
+						print("<p>HEJ!</p>");
+						$pageCounter += 1;
+						break;
 					}
 					
 				}
@@ -143,16 +144,16 @@
 									
 			?>
 				<!--</table>-->
-				
-			
-			</div>
-			
-			<div id="arrows">
+				<div id="arrows">
 					<form action ="searchresult.php" method="GET">
 						<button  name="prev"/><</button>
 						<button  name="next"/>></button>
 					</form>
 				</div>
+			
+			</div>
+			
+			
 			
 			<!-- php slut? -->
 			<div id="searchFilter">
