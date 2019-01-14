@@ -177,7 +177,7 @@
 				print("
 						<table>
 						<tr>
-						<td><img src='./green.svg' class='availInfo'  alt='gröm cirkel'></td>
+						<td><img src='./green.svg' class='availInfo'  alt='grön cirkel'></td>
 						<td><p>Komplett</p></td>
 						</tr>
 						<tr>
@@ -275,7 +275,8 @@
 							$availabilityText = 'Tillgänglig';
 							
 							$availableFigGreen[] = 
-							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
+							"<tr>
+							<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$figName></td>
 							<td>$figName</td>
 							<td>$itemID</td>
@@ -289,7 +290,8 @@
 						$availabilityText = 'Ej tillgänglig';
 						
 						$availableFigRed[] = 
-						"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
+						"<tr>
+						<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 						<td><img src=$imgsrc alt=$figName></td>
 						<td>$figName</td>
 						<td>$itemID</td>
@@ -418,7 +420,8 @@
 							$availabilityText = 'Tillgänglig';
 							
 							$availableGreen[] = 
-							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
+							"<tr>
+							<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$partName></td>
 							<td>$partName</td>
 							<td>$itemID</td>
@@ -433,7 +436,8 @@
 							$availabilityText = 'Tillgänglig i annan färg';
 							
 							$availableYellow[] = 
-							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
+							"<tr>
+							<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$partName></td>
 							<td>$partName</td>
 							<td>$itemID</td>
@@ -447,7 +451,8 @@
 							$availabilityText = 'Ej tillgänglig';
 							
 							$availableRed[] = 
-							"<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
+							"<tr>
+							<td><img class='availInfo' src=$imgsrcAvail alt=$availabilityText></td>
 							<td><img src=$imgsrc alt=$partName></td>
 							<td>$partName</td>
 							<td>$itemID</td>
