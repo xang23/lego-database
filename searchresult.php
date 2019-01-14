@@ -66,6 +66,8 @@
 				$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
 				
 				$setCounter = 0;
+				
+				print("<ul class='resultsList'>");
 		
 				while($row = mysqli_fetch_array($result)) {
 					
@@ -116,14 +118,17 @@
 					print("</div>");
 					*/
 					
+					print("<li>");
 					
 					print("
 					<div class='box'>
-					<img class = setImg src= $imgsrc alt=$fileName> \n
+					<img class = 'setImg' src= $imgsrc alt=$fileName> \n
 					<p><a href='set.php?searchID=$SetID'>$setname</a></p>
 					<p>$setYear</p>
 					</div>
 					");
+					
+					print("</li>");
 					
 					$setCounter += 1;
 					if($setCounter%3 == 0){
@@ -131,20 +136,24 @@
 					
 				}
 				
+				print("</ul>");
 
 
 				mysqli_close($link);
 									
 			?>
-				</table>
-				<div id="arrows">
+				<!--</table>-->
+				
+			
+			</div>
+			
+			<div id="arrows">
 					<form action ="searchresult.php" method="GET">
 						<button  name="prev"/><</button>
 						<button  name="next"/>></button>
 					</form>
 				</div>
 			
-			</div>
 			<!-- php slut? -->
 			<div id="searchFilter">
 			</div>
