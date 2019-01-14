@@ -124,12 +124,46 @@ select{
 
 /*Search result*/
 .box{
-	background-color: pink;
+	/*background-color: #fecd2f;*/
+	/*border: solid black;*/
+	border: solid #fecd2f;
 	width: 150px;
 	height: 300px;
-	padding: 10px;
+	padding: 0px;
 	margin: 10px;
+	color: #000000;
+	font-family: 'roboto', sans-serif;
+	font-weight: bold;
+
 }
+
+.searchResultInfo{
+	padding: 0 5px;
+	height: 150px;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+}
+
+.year{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+
+}
+
+
+.box a{
+	color: #000000;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.imgDiv{
+	height: 150px;
+	overflow: hidden;
+}
+
 .setImg{
 	width: 150px;
 }
@@ -144,6 +178,9 @@ select{
 	list-style-type: none;
 	float: left;
 	display: block;
+}
+#searchFilter{
+	
 }
 
 
