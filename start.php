@@ -1,181 +1,70 @@
-<?php include "txt/header.txt";?>
+?php include "txt/header.txt";?>
 
-		</div>
-		<div class="main">
-			<div id="searchBar">
+<!-- Avslutande av header-div -->
+		<div id="description">
+      <h3 id="descriptionText" class="headerText">
+	  Sök bland legosatser och se vilka som finns i samlingen!</h3>
+    </div>
+
+  </div>
+  <div id="background"> 
+
+		<img id="legobit-test" src="legobit-test.svg" alt="legobit-test">
+
+	  <div id="searchBar">
 			<form id="myForm" action ="searchresult.php" method="GET">
-			<!-- Hela "sökfönstret" -->
-				<div id="searchField">
-				<p>Search <input type="text" name="search"/></p>
+			  <!-- Hela "sökfönstret" -->
+			  <div id="searchRow1">
+				<input id="searchField" type="text" name="search" placeholder="Sök på en sats här..." required/>
 				<!-- Söktext in i denna -->
-				</div>
-				<div id="searchButton">
-				<p><input type="submit" /> </p>
-				</div>
+			  <!-- <div id="searchButton"> -->
+				<input  id="searchButton" type="submit" />
+			  </div>
+
+			  <div id="catergorySearch">
+				<!--kommer behöva hämta alla kategorier från databasen-->
+				<!--<label for="category">Välj kategori</label>-->
+				<select name="category">
+				  <option value="" disabled selected>Välj kategori...</option>
+				  <option value="starwars">Star Wars</option>
+				  <option value="castle">Castle</option>
+				  <option value="basic">Basic</option>
+				  <option value="duplo">Duplo</option>
+				</select>
+			  </div>
+
+			  <div id="yearSearch">
+				<!--<label for="year">Välj år</label>-->
+				<!--php för att hämta alla år-->
+				<select name="year">
+				  <option value="" disabled selected>Välj år...</option>
+				  <option value="1999">1999</option>
+				  <option value="2000">2000</option>
+				  <option value="2001">2001</option>
+				  <option value="2002">2002</option>
+				</select>
+			  </div>
+
+			  <div id="sortBy">
+				<!--<label for="sortBy">Sortera efter...</label>-->
+				<select name="sortBy">
+				  <option value="" disabled selected>Sortera efter...</option>
+				  <option value="sets">Sats</option>
+				  <option value="parts">Bitar</option>
+				</select>
 				
-				<div id="catergorySearch">
-				</div>
-				<div id="yearSearch">
-				</div>
-				<div id="sortBy">
-					<?php
-						include "radio.txt";	
-					?>
-				</div>
-				</form>
-			</div>
-			<!-- php start-->
-			<?php
-			$setCounter = 0;
-			
-			print("<p>Visarresultat för sökordet ".$_GET['search']."...</p>");
-			
-			print('<div id="searchResult">');
-
-
-			$link = mysqli_connect("mysql.itn.liu.se" ,"lego","", "lego");
-				
-				
-
-
-				if (!$link) {
-					echo "Error: Unable to connect to MySQL." . PHP_EOL;
-					echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
-					echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
-					exit;
-				}
-
-
-
-				include "search.php";
-
-				//Sidan ska söka på ett setId elr setnamn, ge förslag på matchande sökresultat. Skriver man något som matchar 100% så kmr detta bara. Annars visas de som matchar fast i ordning.
-				//Koppla upp <li> blog.php?order=asc;<li> blog.php?order=desc&limit=10 colors.Colorname LIKE "%'.$_GET["search"].'%" OR Setname LIKE "%'.$_GET["search"].'%"  ;
-
-				//Search keyword thingy:
-
-				//Skriv ut alla poster
-				$urlBase="http://www.itn.liu.se/~stegu76/img.bricklink.com/";
-				
-				
-				
-				print("<ul class='resultsList'>");
-		
-				while($row = mysqli_fetch_array($result)) {
-					
-					//För bild
-					$SetID = $row['SetID'];
-					$itemtype = 'S';
-					$filetype;
-					$setYear = $row['Year'];
-					
-					
-					
-					if($row['has_largegif']OR $row['has_largejpg']){
-						$itemtype = 'SL';
+						<?php
+							include "radio.txt";
+						?>
 						
-							if ($row['has_largegif'])
-							{
-								$filetype = ".gif";
-							}
-							else
-							{
-								$filetype = ".jpg";
-							}
-						}
-						else{
-						$itemtype= 'S';	
-							
-							if($row['has_jpg'])
-							{
-								$filetype=".jpg";
-							}
-							else
-							{
-								$filetype=".gif";
-							}
-						}
-						
-					$fileName = $itemtype."/".$SetID.$filetype;
-					$imgsrc = $urlBase.$fileName;
-					
-					
-					$setname=$row['Setname'];
-					/*
-					print ("<div class = searchResult>");
-					print ("<tr><td><p>$fileName</p></td>");
-					print ("<td><p>$SetID</p></td>");
-					print ("<td><p>$setname</p></td>");
-					print("<td><img src= $imgsrc alt=$fileName></td></tr>");
-					print("</div>");
-					*/
-					
-					print("<li>");
-					
-					print("
-					<a href='set.php?searchID=$SetID'>
-						<div class='box'>
-							<div class='imgDiv'>
-							<img class = 'setImg' src= $imgsrc alt=$fileName>
-							</div> \n
-							<div class='searchResultInfo'>
-							<p><a href='set.php?searchID=$SetID'>$setname</a></p>
-							<p class= 'year'>$setYear</p>
-							</div> \n
-						</div>
-					</a>
-					");
-					
-					print("</li>");
-					
-					$setCounter += 1;
-					if( $setCounter == $itemsPerPage){
-						print("<p>HEJ!</p>");
-						$pageCounter += 1;
-						break;
-					}
-					
-				}
-				
-				print("</ul>");
-
-
-				mysqli_close($link);
-									
-			?>
-				<!--</table>-->
-				<div id="arrows">
-					<form name="pagination" id="pagination" action ="searchresult.php" method="GET">
-						<button  id="prev" name="prev" value="2" onclick="changePage();" /><</button>
-						<button  id="next" name="next" value="2" onclick="paginationNext"/>></button>
-					</form>
 				</div>
-				
-				<form id="pagination" name="pagination" action="searchresult.php" method="GET">
-					<input id="prev2" name="prev" type="button" value="4" onclick="changePage();">
-					<input type="submit" value="submit"/>
-				</form>
-				
-				<script type="text/javascript">
-					function changePage()
-					{
-						//Change value of button
-						document.getElementById("prev").value = "3";
-					}
-				</script>
-				
-				
-				</script>
-			
-			</div>
-			
-			
-			
-			<!-- php slut? -->
-			<div id="searchFilter">
-			</div>
-			
+					
+			</form>
 		</div>
+	</div>
+		
+		<?php include "txt/footer.txt";?>
+		
 		
 	</body>
 </html>
