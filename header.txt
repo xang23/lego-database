@@ -28,7 +28,7 @@
 			</div>
 
 			<div id="title">
-			  <h1 class="headline"> LEGODATABASEN </h1>
+			  <a href="start.php"><h1 class="headline"> LEGODATABASEN </h1></a>
 			</div>
 
 		<!-- Kom ihåg att avsluta header-div för varje enskild sida -->
